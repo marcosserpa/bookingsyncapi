@@ -67,6 +67,7 @@ describe Api::V1::RentalsController, type: :request do
   describe 'DELETE/rentals/:id' do
     let!(:rental_two) { FactoryGirl.create(:rental_two) }
     let!(:all_rentals_ids) { Rental.all.map &:id }
+    let!(:booking) { FactoryGirl.create(:booking_one, rental: rental_two) }
 
     context 'when request a with a valid ID' do
       before do
@@ -77,9 +78,13 @@ describe Api::V1::RentalsController, type: :request do
         delete api_v1_rental_path(id: rental_two.id), {}, request_headers
       end
 
-      it "should delete the rental" do
+      it 'should delete the rental' do
         expect(response.status).to eql 204
         expect(all_rentals_ids - Rental.all.map(&:id)).to eql [rental_two.id]
+      end
+
+      it "should also remove all it's dependent bookings" do
+        expect{ Booking.find(booking.id) }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
