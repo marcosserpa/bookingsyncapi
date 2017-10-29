@@ -1,6 +1,8 @@
 module Api
   module V1
     class RentalsController < ApplicationController
+      before_action :authorize
+
       def index
         rentals = Rental.all
 

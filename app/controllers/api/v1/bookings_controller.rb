@@ -1,6 +1,8 @@
 module Api
   module V1
     class BookingsController < ApplicationController
+      before_action :authorize
+
       def index
         bookings = Booking.all
 

@@ -7,7 +7,7 @@ describe Api::V1::RentalsController, type: :request do
 
     context 'when the request is valid' do
       before do
-        get api_v1_rentals_path
+        get api_v1_rentals_path, { token_auth: 'ABCDE_BookyngSync' }
       end
 
       it 'returns all rentals' do
@@ -27,7 +27,8 @@ describe Api::V1::RentalsController, type: :request do
           rental: {
             name: 'Rental Test',
             daily_rate: 10.0
-          }
+          },
+          token_auth: 'ABCDE_BookyngSync'
         }
         request_headers = { 'Accept' => 'application/json' }
 
@@ -49,7 +50,8 @@ describe Api::V1::RentalsController, type: :request do
         rental_params = {
           rental: {
             name: 'New Name 2'
-          }
+          },
+          token_auth: 'ABCDE_BookyngSync'
         }
 
         request_headers = { 'Accept' => 'application/json' }
@@ -75,7 +77,7 @@ describe Api::V1::RentalsController, type: :request do
           'Accept' => 'application/json'
         }
 
-        delete api_v1_rental_path(id: rental_two.id), {}, request_headers
+        delete api_v1_rental_path(id: rental_two.id), { token_auth: 'ABCDE_BookyngSync' }, request_headers
       end
 
       it 'should delete the rental' do

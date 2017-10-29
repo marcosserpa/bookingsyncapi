@@ -7,7 +7,7 @@ describe Api::V1::BookingsController, type: :request do
 
     context 'when the request is valid' do
       before do
-        get api_v1_bookings_path
+        get api_v1_bookings_path, { token_auth: 'ABCDE_BookyngSync' }
       end
 
       it 'returns all bookings' do
@@ -32,7 +32,8 @@ describe Api::V1::BookingsController, type: :request do
             client_email: 'post_email@email.com',
             price: 10.0,
             rental_id: rental.id
-          }
+          },
+          token_auth: 'ABCDE_BookyngSync'
         }
         request_headers = { 'Accept' => 'application/json' }
 
@@ -59,7 +60,8 @@ describe Api::V1::BookingsController, type: :request do
         booking_params = {
           booking: {
             price: 18.90
-          }
+          },
+          token_auth: 'ABCDE_BookyngSync'
         }
 
         request_headers = { 'Accept' => 'application/json' }
@@ -85,7 +87,7 @@ describe Api::V1::BookingsController, type: :request do
           'Accept' => 'application/json'
         }
 
-        delete api_v1_booking_path(id: booking_two.id), {}, request_headers
+        delete api_v1_booking_path(id: booking_two.id), { token_auth: 'ABCDE_BookyngSync' }, request_headers
       end
 
       it "should delete the booking" do
