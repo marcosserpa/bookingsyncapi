@@ -9,14 +9,16 @@ class Booking < ActiveRecord::Base
 
   scope :search_data_overlapings, lambda { |range|
     where(
-      '(start_at BETWEEN ? AND ? OR end_at BETWEEN ? AND ?) OR (start_at <= ? AND end_at >= ?)',
-      range.start_at, range.end_at, range.start_at, range.end_at, range.start_at, range.end_at
+      'ID NOT IN (?) AND ((start_at BETWEEN ? AND ? OR end_at BETWEEN ? AND ?) OR (start_at <= ? AND end_at >= ?))',
+      range.id, range.start_at, range.end_at, range.start_at, range.end_at, range.start_at, range.end_at
     )
   }
 
   def validates_booking_overlapping
+    return true if start_at.blank? || end_at.blank?
+
     date_range = Booking.search_data_overlapings(self)
 
-    errors.add(:dates, "Dates informed cannot overlap existent dates to it's rental") if date_range.present?
+    errors.add(:dates, "informed cannot overlap existent dates to it's rental") if date_range.present?
   end
 end

@@ -5,7 +5,7 @@ module Api
         rentals = Rental.all
 
         if rentals
-          render json: Rental.all, status: 200
+          render json: rentals, status: 200
         else
           render json: { message: 'There was an internal error' }, status: 500
         end

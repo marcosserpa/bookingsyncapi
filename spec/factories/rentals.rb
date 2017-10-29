@@ -8,4 +8,9 @@ FactoryGirl.define do
     name 'Rental Two'
     daily_rate 10.0
   end
+
+  factory :rental, class: 'Rental' do
+    name 'Rental'
+    daily_rate 30.0
+  end
 end
