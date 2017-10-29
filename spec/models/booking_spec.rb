@@ -1,10 +1,13 @@
 require 'spec_helper'
+require 'byebug'
 
 describe Booking do
   let(:rental) { FactoryGirl.create(:rental_one) }
   let(:booking_one) { FactoryGirl.create(:booking_one) }
 
   context 'should not be created' do
+    let!(:booking) { FactoryGirl.create(:booking_one) }
+
     it 'when check in date is not filled' do
       booking = Booking.create(end_at: DateTime.now, client_email: 'email@email.com', price: 10.0)
 
@@ -45,16 +48,16 @@ describe Booking do
     end
 
     it 'when it has date overlap with another registered booking' do
-      booking_two = Booking.new(
+      booking_one = Booking.create(
                       rental: rental,
                       start_at: DateTime.now + 1.day,
-                      end_at: DateTime.now + 3.day,
-                      client_email: 'email@email.com',
-                      price:  10.0
+                      end_at: DateTime.now + 4.day,
+                      client_email: 'me@email.com',
+                      price:  20.0
                     )
 
-      expect(booking_two.save).to be false
-      expect(booking_two.errors[:dates]).to match_array ["Dates informed cannot overlap existent dates to it's rental"]
+      expect(booking.save).to be false
+      expect(booking.errors[:dates]).to match_array ["informed cannot overlap existent dates to it's rental"]
     end
   end
 
