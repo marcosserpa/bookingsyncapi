@@ -20,4 +20,31 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      rental:
+        name: 'Name'
+        daily_rate: 'Daily Rate'
+      booking:
+        start_at: 'Check In'
+        end_at: 'Check Out'
+        client_email: 'Client Email'
+        price: 'Total Price'
+    errors:
+      models:
+        rental:
+          attributes:
+            name:
+              blank: "Name can't be blank"
+            daily_rate:
+              blank: 'Daily Rate needs a value'
+        booking:
+          attributes:
+            start_at:
+              blank: 'Check in date need to be filled'
+            end_at:
+              blank: 'Check out date need to be filled'
+            client_email:
+              blank: 'Client email needs to be registered'
+            price:
+              blank: 'Total price needs to be registered'
